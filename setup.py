@@ -24,7 +24,7 @@ tests_require = install_requires + [
 
 setup(name = name,
       version = version,
-      description = 'Image widget for z3c.form, using Grok',
+      description = 'Image widget (with thumbnails) for z3c.form, using Grok',
       long_description = readme + '\n\n' + history,
       keywords = 'Grok Zope3 Dolmen Widget Image',
       author = 'Souheil Chelfouh',
