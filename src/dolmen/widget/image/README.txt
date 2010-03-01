@@ -14,9 +14,13 @@ We are going to develop here a small example, to demonstrate the use
 of `dolmen.widget.image`. First, we instanciate our test model and add
 an image field to the object::
 
+  >>> from persistent import Persistent
+
+  >>> class Mammoth(Persistent):
+  ...     pass
+
   >>> import dolmen.file
   >>> import grokcore.component as grok
-  >>> from dolmen.widget.image.tests import Mammoth
   >>> from zope.interface import Interface, alsoProvides
   >>> from zope.schema.fieldproperty import FieldProperty
 
@@ -42,7 +46,8 @@ edit the picture field::
 
 We persist our Mammoth to get a located mammoth with an URL::
 
-  >>> root = getRootFolder()
+  >>> from zope.component.hooks import getSite
+  >>> root = getSite()
   >>> root['manfred'] = manfred
   >>> manfred = root['manfred']
 
@@ -58,17 +63,9 @@ We can call the edit form on our persisted object::
   >>> print form.widgets['picture'].render() 
   <div id="form-widgets-picture"
        class="image-widget required imagefield-field">
-  <BLANKLINE>
-  <BLANKLINE>
-  <BLANKLINE>
-  <BLANKLINE>
-  <BLANKLINE>
     <input type="file" id="form-widgets-picture-input"
            name="form.widgets.picture" />
-  <BLANKLINE>
-  <BLANKLINE>
   </div>
-  <BLANKLINE>
 
 Now, let's try with a fake value::
      
@@ -79,17 +76,11 @@ Now, let's try with a fake value::
   >>> print form.widgets['picture'].render() 
   <div id="form-widgets-picture"
        class="image-widget required imagefield-field">
-  <BLANKLINE>
     <div class="image-widget-preview">
       <img src="http://127.0.0.1/manfred/++thumbnail++picture.preview" />
     </div>
-  <BLANKLINE>
     <span>
-      <a href="http://127.0.0.1/manfred/++download++picture"></a>
-      <span class="discreet">
-        &mdash;
-  <BLANKLINE>
-      </span>
+      <a href="http://127.0.0.1/manfred/++download++picture"></a> &mdash;
     </span>
     <div style="padding-top: 1em;">
       <input type="radio" value="nochange" checked="checked"

@@ -7,7 +7,7 @@ from zope.interface import Interface
 from dolmen.file import IImageField
 from dolmen.widget.file import FileWidget
 
- 
+
 class ImageWidget(FileWidget):
     """A widget for a named file object. It handles specificly an
     image, displaying a thumbnail on both the edit and display form.
