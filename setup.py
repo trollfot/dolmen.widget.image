@@ -2,41 +2,40 @@ from setuptools import setup, find_packages
 from os.path import join
 
 name = 'dolmen.widget.image'
-version = '0.2'
+version = '1.0a1'
 readme = open(join('src', 'dolmen', 'widget', 'image', 'README.txt')).read()
 history = open(join('docs', 'HISTORY.txt')).read()
 
 install_requires = [
-    'setuptools',
-    'zope.interface',
     'dolmen.file >= 0.5.1',
     'dolmen.thumbnailer',
-    'dolmen.widget.file >= 0.2',
-    'grokcore.view',
+    'dolmen.widget.file >= 1.0a1',
     'grokcore.component',
-    'megrok.z3cform.base >= 0.1',
+    'grokcore.view',
+    'setuptools',
+    'zeam.form.base',
+    'zeam.form.ztk',
+    'zope.interface',
     ]
 
 tests_require = [
-    'zope.site',
-    'zope.testing',
-    'zope.container',
+    'zope.app.testing',
     'zope.component',
-    'zope.traversing',
+    'zope.container',
+    'zope.i18n',
     'zope.publisher',
     'zope.schema',
     'zope.security',
-    'zope.i18n',
-    # This one is needed because z3c.form doesn't declare all
-    # the needed dependencies.
-    'zope.app.pagetemplate',
+    'zope.site',
+    'zope.testing',
+    'zope.traversing',
     ]
 
 setup(name=name,
       version=version,
-      description='Image widget (with thumbnails) for z3c.form, using Grok',
+      description='Image widget (with thumbnails) for `zeam.form`',
       long_description=readme + '\n\n' + history,
-      keywords='Grok Zope3 Dolmen Widget Image',
+      keywords='Grok Zeam Zope3 Dolmen Widget Image',
       author='Souheil Chelfouh',
       author_email='trollfot@gmail.com',
       url='',
@@ -52,7 +51,7 @@ setup(name=name,
       extras_require={'test': tests_require},
       test_suite="dolmen.widget.image",
       classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
         'Framework :: Zope3',
         'Intended Audience :: Other Audience',

@@ -1,6 +1,15 @@
 Changelog
 =========
 
+1.0 alpha 1 (2010-05-14)
+------------------------
+
+* Major change : the widget is now meant to be used in `zeam.form`.
+  Dolmen is no longer using `z3c.form`.
+
+* The HTML code of the widget has been improved.
+
+
 0.2 (2010-03-01)
 ----------------
 
@@ -11,6 +20,7 @@ Changelog
   display the file size.
 
 * Updated the tests to get rid of the unneeded zope.app packages.
+
 
 0.1 (2009-10-22)
 ----------------

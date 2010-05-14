@@ -14,9 +14,7 @@ We are going to develop here a small example, to demonstrate the use
 of `dolmen.widget.image`. First, we instanciate our test model and add
 an image field to the object::
 
-  >>> from persistent import Persistent
-
-  >>> class Mammoth(Persistent):
+  >>> class Mammoth(object):
   ...     pass
 
   >>> import dolmen.file
@@ -35,11 +33,13 @@ an image field to the object::
 The picture is now set on our Mammoth. We create a form to try and
 edit the picture field::
 
-  >>> from megrok.z3cform.base import EditForm
+  >>> from zeam.form.ztk import Form, Fields
 
-  >>> class EditMammoth(EditForm):
+  >>> class EditMammoth(Form):
   ...    grok.name('edit')
   ...    grok.context(IMammothId)
+  ...    ignoreContent = False
+  ...    fields = Fields(IMammothId)
 
   >>> grok.testing.grok_component('edit', EditMammoth)
   True
@@ -59,12 +59,11 @@ We can call the edit form on our persisted object::
   >>> request = TestRequest()
 
   >>> form = getMultiAdapter((manfred, request), name='edit')
-  >>> form.updateWidgets() 
-  >>> print form.widgets['picture'].render() 
-  <div id="form-widgets-picture"
-       class="image-widget required imagefield-field">
-    <input type="file" id="form-widgets-picture-input"
-           name="form.widgets.picture" />
+  >>> form.updateWidgets()
+  >>> print form.fieldWidgets.get('form.field.picture').render()
+  <div id="form-field-picture">
+      <input type="file" id="form-field-picture-input"
+               name="form.field.picture" />
   </div>
 
 Now, let's try with a fake value::
@@ -73,41 +72,44 @@ Now, let's try with a fake value::
   >>> form = getMultiAdapter((manfred, request), name='edit')
   >>> form.updateWidgets() 
 
-  >>> print form.widgets['picture'].render() 
-  <div id="form-widgets-picture"
-       class="image-widget required imagefield-field">
-    <div class="image-widget-preview">
-      <img src="http://127.0.0.1/manfred/++thumbnail++picture.preview" />
+  >>> print form.fieldWidgets.get('form.field.picture').render()
+  <div id="form-field-picture">
+    <div>
+      <div class="widget-image-preview">
+        <img src="http://127.0.0.1/manfred/++thumbnail++picture.preview"
+             title="Download" />
+      </div>
+      <p class="file-info">
+        <a class="filename"
+           href="http://127.0.0.1/manfred/++download++picture">Download</a>
+      </p>
     </div>
-    <span>
-      <a href="http://127.0.0.1/manfred/++download++picture"></a> &mdash;
-    </span>
-    <div style="padding-top: 1em;">
-      <input type="radio" value="nochange" checked="checked"
-             class="noborder"
-             name="form.widgets.picture.nochange"
-             onclick="document.getElementById('form-widgets-picture-input').disabled=true"
-             id="form-widgets-picture-nochange" />
-  <BLANKLINE>
-      <label for="form-widgets-picture-nochange">Keep existing file</label>
+    <div>
+      <input type="radio" value="keep" checked="checked"
+             class="noborder" name="form.field.picture.action"
+             onclick="document.getElementById('form-field-picture-input').disabled=true"
+             id="form-field-picture-action" />
+      <label for="form-field-picture-action">Keep existing file</label>
       <br />
       <input type="radio" value="delete" class="noborder"
-             name="form.widgets.picture.nochange"
-             onclick="document.getElementById('form-widgets-picture-input').disabled=true"
-             id="form-widgets-picture-delete" />
-      <label for="form-widgets-picture-delete">Delete existing file</label>
+             name="form.field.picture.action"
+             onclick="document.getElementById('form-field-picture-input').disabled=true"
+             id="form-field-picture-delete" />
+      <label for="form-field-picture-delete">Delete existing file</label>
       <br />
-      <input type="radio" name="form.widgets.picture.nochange"
-             onclick="document.getElementById('form-widgets-picture-input').disabled=false"
-             id="form-widgets-picture-replace" />
-      <label for="form-widgets-picture-replace">Replace with new file</label>
+      <input type="radio" value="replace" class="noborder"
+             name="form.field.picture.action"
+             onclick="document.getElementById('form-field-picture-input').disabled=false"
+             id="form-field-picture-replace" />
+          <label for="form-field-picture-replace">Replace with new file</label>
     </div>
-    <input type="file" id="form-widgets-picture-input"
-           name="form.widgets.picture" />
-  <BLANKLINE>
-    <script type="text/javascript">document.getElementById('form-widgets-picture-input').disabled=true;</script>
+    <div>
+      <input type="file" id="form-field-picture-input"
+             name="form.field.picture" />
+      <script type="text/javascript">document.getElementById('form-field-picture-input').disabled=true;</script>
+    </div>
   </div>
-  <BLANKLINE>
+
 
 With non persistent objects (which don't resolve to an URL), no
 preview is displayed. If we can't resolve to an URL, we can't serve
@@ -119,33 +121,30 @@ the thumbnail or download the data::
 
   >>> form = getMultiAdapter((judith, request), name='edit')
   >>> form.updateWidgets() 
-  >>> print form.widgets['picture'].render() 
-  <div id="form-widgets-picture"
-       class="image-widget required imagefield-field">
-  <BLANKLINE>
-  <BLANKLINE>
-  <BLANKLINE>
-  <BLANKLINE>
-    <div style="padding-top: 1em;">
-      <input type="radio" value="nochange" checked="checked"
-             class="noborder"
-             name="form.widgets.picture.nochange"
-             onclick="document.getElementById('form-widgets-picture-input').disabled=true"
-             id="form-widgets-picture-nochange" />
-  <BLANKLINE>
-      <label for="form-widgets-picture-nochange">Keep existing file</label>
+  >>> print form.fieldWidgets.get('form.field.picture').render()
+  <div id="form-field-picture">
+    <div>
+      <input type="radio" value="keep" checked="checked"
+             class="noborder" name="form.field.picture.action"
+             onclick="document.getElementById('form-field-picture-input').disabled=true"
+             id="form-field-picture-action" />
+      <label for="form-field-picture-action">Keep existing file</label>
       <br />
-  <BLANKLINE>
-      <label for="form-widgets-picture-delete">Delete existing file</label>
+      <input type="radio" value="delete" class="noborder"
+             name="form.field.picture.action"
+             onclick="document.getElementById('form-field-picture-input').disabled=true"
+             id="form-field-picture-delete" />
+      <label for="form-field-picture-delete">Delete existing file</label>
       <br />
-      <input type="radio" name="form.widgets.picture.nochange"
-             onclick="document.getElementById('form-widgets-picture-input').disabled=false"
-             id="form-widgets-picture-replace" />
-      <label for="form-widgets-picture-replace">Replace with new file</label>
+      <input type="radio" value="replace" class="noborder"
+             name="form.field.picture.action"
+             onclick="document.getElementById('form-field-picture-input').disabled=false"
+             id="form-field-picture-replace" />
+          <label for="form-field-picture-replace">Replace with new file</label>
     </div>
-    <input type="file" id="form-widgets-picture-input"
-           name="form.widgets.picture" />
-  <BLANKLINE>
-    <script type="text/javascript">document.getElementById('form-widgets-picture-input').disabled=true;</script>
+    <div>
+      <input type="file" id="form-field-picture-input"
+             name="form.field.picture" />
+      <script type="text/javascript">document.getElementById('form-field-picture-input').disabled=true;</script>
+    </div>
   </div>
-  <BLANKLINE>
