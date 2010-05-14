@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import grokcore.view as grok
-from zope.interface import Interface
 from dolmen.file import IImageField
+from dolmen.widget.file import FileWidget, DisplayFileWidget
+from dolmen.widget.file import IFileWidget, FileSchemaField
 from zeam.form.base.interfaces import IFormData
 from zeam.form.ztk.fields import registerSchemaField
-from dolmen.widget.file import IFileWidget, FileSchemaField
-from dolmen.widget.file import FileWidget, DisplayFileWidget
+from zope.interface import Interface
 
 grok.templatedir('templates')
 
@@ -29,7 +29,7 @@ class ImageWidget(FileWidget):
     """
     grok.implements(IImageWidget)
     grok.adapts(ImageSchemaField, IFormData, Interface)
-    
+
     @property
     def preview_url(self):
         if self.form.ignoreContent or not self.url:
