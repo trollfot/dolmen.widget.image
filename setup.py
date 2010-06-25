@@ -2,14 +2,14 @@ from setuptools import setup, find_packages
 from os.path import join
 
 name = 'dolmen.widget.image'
-version = '1.0a1'
+version = '1.0a2'
 readme = open(join('src', 'dolmen', 'widget', 'image', 'README.txt')).read()
 history = open(join('docs', 'HISTORY.txt')).read()
 
 install_requires = [
     'dolmen.file >= 0.5.1',
     'dolmen.thumbnailer',
-    'dolmen.widget.file >= 1.0a1',
+    'dolmen.widget.file >= 1.0a2',
     'grokcore.component',
     'grokcore.view',
     'setuptools',
@@ -59,4 +59,9 @@ setup(name=name,
         'Operating System :: OS Independent',
         'Programming Language :: Python',
       ],
+      entry_points="""
+      # -*- Entry points: -*-
+      [zeam.form.ztk.fields]
+      image = dolmen.widget.image.widget:registerZeamField
+      """,
 )

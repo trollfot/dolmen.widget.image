@@ -11,6 +11,10 @@ from zope.interface import Interface
 grok.templatedir('templates')
 
 
+def registerZeamField():
+    registerSchemaField(ImageSchemaField, IImageField)
+
+
 class IImageWidget(IFileWidget):
     """A widget that represents a file.
     """
@@ -19,8 +23,6 @@ class IImageWidget(IFileWidget):
 class ImageSchemaField(FileSchemaField):
     """An image field.
     """
-
-registerSchemaField(ImageSchemaField, IImageField)
 
 
 class ImageWidget(FileWidget):
