@@ -1,8 +1,15 @@
 Changelog
 =========
 
-1.0 alpha 1 (2010-05-14)
-------------------------
+1.0a2 (2010-06-25)
+------------------
+
+* Updated the field registration to work with the latest zeam.form.ztk
+  improvement : registration by entry points.
+
+
+1.0a1 (2010-05-14)
+------------------
 
 * Major change : the widget is now meant to be used in `zeam.form`.
   Dolmen is no longer using `z3c.form`.
