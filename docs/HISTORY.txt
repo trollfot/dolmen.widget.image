@@ -1,6 +1,14 @@
 Changelog
 =========
 
+1.0b1 (2010-07-05)
+------------------
+
+* The package now uses the latest improvements in the field
+  registration process, in both ``zeam.form`` and
+  ``dolmen.widget.file``.
+
+
 1.0a2 (2010-06-25)
 ------------------
 

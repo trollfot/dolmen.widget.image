@@ -2,24 +2,24 @@ from setuptools import setup, find_packages
 from os.path import join
 
 name = 'dolmen.widget.image'
-version = '1.0a2'
+version = '1.0b1'
 readme = open(join('src', 'dolmen', 'widget', 'image', 'README.txt')).read()
 history = open(join('docs', 'HISTORY.txt')).read()
 
 install_requires = [
     'dolmen.file >= 0.5.1',
     'dolmen.thumbnailer',
-    'dolmen.widget.file >= 1.0a2',
+    'dolmen.widget.file >= 1.0b1',
     'grokcore.component',
     'grokcore.view',
     'setuptools',
-    'zeam.form.base',
-    'zeam.form.ztk',
+    'zeam.form.base >= 1.0rc1',
+    'zeam.form.ztk >= 1.0rc1',
     'zope.interface',
     ]
 
 tests_require = [
-    'zope.app.testing',
+    'zope.app.testing',  # Needed by zeam.form
     'zope.component',
     'zope.container',
     'zope.i18n',
@@ -51,7 +51,7 @@ setup(name=name,
       extras_require={'test': tests_require},
       test_suite="dolmen.widget.image",
       classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Framework :: Zope3',
         'Intended Audience :: Other Audience',
@@ -61,7 +61,8 @@ setup(name=name,
       ],
       entry_points="""
       # -*- Entry points: -*-
-      [zeam.form.ztk.fields]
-      image = dolmen.widget.image.widget:registerZeamField
+      [zeam.form.components]
+      image = dolmen.widget.image.widget:register
       """,
+
 )

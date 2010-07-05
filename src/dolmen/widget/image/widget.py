@@ -2,8 +2,8 @@
 
 import grokcore.view as grok
 from dolmen.file import IImageField
-from dolmen.widget.file import FileWidget, DisplayFileWidget
-from dolmen.widget.file import IFileWidget, FileSchemaField
+from dolmen.widget.file import (
+    FileWidget, DisplayFileWidget, IFileWidget, FileSchemaField)
 from zeam.form.base.interfaces import IFormData
 from zeam.form.ztk.fields import registerSchemaField
 from zope.interface import Interface
@@ -11,7 +11,9 @@ from zope.interface import Interface
 grok.templatedir('templates')
 
 
-def registerZeamField():
+def register():
+    """Entry point hook.
+    """
     registerSchemaField(ImageSchemaField, IImageField)
 
 
